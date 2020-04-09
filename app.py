@@ -12,7 +12,7 @@ pipeline = pickle.load(open('./model/housing_pipeline.pkl','rb'))
 app = Flask(__name__)
 
 # routes
-@app.route('/', methods=['POST'])
+@app.route('/predict', methods=['POST','GET'])
 def predict():
     # get data
     data = request.get_json(force=True)
@@ -33,7 +33,7 @@ def predict():
     result = model.predict(housing_prepared)
 
     # send back to browser
-    output = {'results': int(result[0])}
+    output = {'house_price': int(result[0])}
 
     # return data
     return jsonify(results=output)
